@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'dart:ui';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class ScoutSchedule {
@@ -118,6 +120,11 @@ class ScoutSchedule {
   Future<void> save(String authority) async {
     version++;
     await upload(authority);
+  }
+
+  Color getVersionColor() {
+    return HSLColor.fromAHSL(1, (version.toDouble() * 82) % 360, 0.5, 0.5)
+        .toColor();
   }
 }
 
