@@ -7,3 +7,4 @@ export 'src/climbing_challenge.dart';
 export 'src/event_types.dart';
 export 'src/game_screen_positions.dart';
 export 'src/robot_roles.dart';
+export 'src/scout_schedule.dart';
