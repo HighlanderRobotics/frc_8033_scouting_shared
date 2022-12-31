@@ -107,7 +107,7 @@ class ScoutSchedule {
 
   Future<void> upload(String authority) async {
     http.post(
-      Uri.http((authority)!, '/API/manager/updateScoutersSchedule'),
+      Uri.http((authority), '/API/manager/updateScoutersSchedule'),
       body: toJSON(),
       headers: {
         'type': 'application/json',
