@@ -112,7 +112,7 @@ class ScoutSchedule {
       Uri.http((authority), '/API/manager/updateScoutersSchedule'),
       body: toJSON(),
       headers: {
-        'type': 'application/json',
+        'Content-Type': 'application/json',
       },
     );
   }
