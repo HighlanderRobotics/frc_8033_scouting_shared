@@ -92,6 +92,22 @@ class ScoutSchedule {
     return null;
   }
 
+  factory ScoutSchedule.fromJSON(String json) {
+    Map<String, dynamic> map = jsonDecode(json);
+
+    return ScoutSchedule(
+      version: map["version"],
+      shifts: (map['shifts'] as List)
+          .map((shift) => ScoutingShift(
+                start: shift['start'],
+                end: shift['end'],
+                scouts:
+                    (shift['scouts'] as List).map((e) => e.toString()).toList(),
+              ))
+          .toList(),
+    );
+  }
+
   String toJSON() {
     final shiftsMap = shifts
         .map((shift) => {
