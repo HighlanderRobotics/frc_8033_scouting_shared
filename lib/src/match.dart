@@ -11,6 +11,37 @@ class Match {
   MatchType type;
   int number;
 
+  String getLocalizedDescription({
+    includeType = true,
+    includeNumber = true,
+    includeTournament = true,
+  }) {
+    if (includeType && !includeNumber && !includeTournament) {
+      return "${type.localizedDescriptionPlural.toLowerCase()} match";
+    }
+    if (includeType && !includeNumber && includeTournament) {
+      return "${type.localizedDescriptionPlural.toLowerCase()} match at $tournamentKey";
+    } // TODO: Make tournament key localizer
+    if (includeType && includeNumber && !includeTournament) {
+      return "${type.localizedDescriptionSingular} $number";
+    } // TODO: Make tournament key localizer
+    if (!includeType && includeNumber && includeTournament) {
+      return "Match #$number at $tournamentKey";
+    } // TODO: Make tournament key localizer
+    if (!includeType && includeNumber && !includeTournament) {
+      return "Match #$number";
+    }
+    if (!includeType && !includeNumber && includeTournament) {
+      return "Match at $tournamentKey";
+    } // TODO: Make tournament key localizer
+    if (!includeType && !includeNumber && !includeTournament) return "Match";
+    if (includeType && includeNumber && includeTournament) {
+      return "${type.localizedDescriptionSingular.toLowerCase()} $number at $tournamentKey";
+    } // TODO: Make tournament key localizer
+
+    return "this should never happen";
+  }
+
   /// Create a match from a long match key such as `2022cc_qm14_1`
   factory Match.fromLongKey(String longKey) {
     List<String> elements = longKey.split("_");
