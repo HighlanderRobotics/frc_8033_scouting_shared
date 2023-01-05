@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 
-class Match {
-  Match(
+class GameMatch {
+  GameMatch(
     this.type,
     this.number,
     this.tournamentKey,
@@ -44,10 +44,10 @@ class Match {
   }
 
   /// Create a match from a long match key such as `2022cc_qm14_1`
-  factory Match.fromLongKey(String longKey) {
+  factory GameMatch.fromLongKey(String longKey) {
     List<String> elements = longKey.split("_");
 
-    return Match(
+    return GameMatch(
       MatchTypeExtension.fromShortName(elements[1].substring(0, 2)),
       int.parse(elements[1].substring(2)),
       elements[0],
