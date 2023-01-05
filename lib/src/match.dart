@@ -11,7 +11,7 @@ class Match {
   MatchType type;
   int number;
 
-  /// Create a match from
+  /// Create a match from a long match key such as `2022cc_qm14_1`
   factory Match.fromLongKey(String longKey) {
     List<String> elements = longKey.split("_");
 
