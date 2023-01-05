@@ -11,6 +11,7 @@ class Match {
   MatchType type;
   int number;
 
+  /// Create a user-readable description of the match
   String getLocalizedDescription({
     includeType = true,
     includeNumber = true,
