@@ -53,6 +53,8 @@ class GameMatchIdentity {
       elements[0],
     );
   }
+
+  String toMediumKey() => "${tournamentKey}_${type.shortName}$number";
 }
 
 enum MatchType {
