@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:lzstring/lzstring.dart';
 
 class ScoutSchedule {
   ScoutSchedule({
@@ -122,6 +123,11 @@ class ScoutSchedule {
       'shifts': shiftsMap,
     });
   }
+
+  factory ScoutSchedule.fromCompressedJSON(String compressed) =>
+      ScoutSchedule.fromJSON(LZString.decompressSync(compressed)!);
+
+  String toCompressedJSON() => LZString.compressSync(toJSON())!;
 
   Future<void> upload(String authority) async {
     http.post(
