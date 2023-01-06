@@ -12,12 +12,11 @@ class TournamentSchedule {
     String authority,
     String tournamentKey,
   ) async {
-    List<Map<String, dynamic>> matchesResponse = (jsonDecode(utf8.decode(
-            (await http.get(Uri.http(authority, '/API/manager/getMatches', {
+    List<dynamic> matchesResponse = (jsonDecode(utf8
+        .decode((await http.get(Uri.http(authority, '/API/manager/getMatches', {
       'tournamentKey': tournamentKey,
     })))
-                .bodyBytes)) as List<dynamic>)
-        .cast();
+            .bodyBytes)) as List<dynamic>);
 
     List<ScheduleMatch> currentMatches = [];
 
