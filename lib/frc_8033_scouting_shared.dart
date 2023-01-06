@@ -9,3 +9,4 @@ export 'src/game_screen_positions.dart';
 export 'src/robot_roles.dart';
 export 'src/scout_schedule.dart';
 export 'src/match.dart';
+export 'src/tournament_schedule.dart';
