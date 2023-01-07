@@ -48,8 +48,9 @@ class GameMatchIdentity {
     List<String> elements = longKey.split("_");
 
     return GameMatchIdentity(
-      MatchTypeExtension.fromShortName(elements[1].substring(0, 2)),
-      int.parse(elements[1].substring(2)),
+      MatchTypeExtension.fromShortName(
+          elements[1].replaceAll(RegExp('\\d'), "")),
+      int.parse(elements[1].replaceAll(RegExp('[a-zA-Z]'), "")),
       elements[0],
     );
   }
