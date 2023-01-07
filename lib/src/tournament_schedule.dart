@@ -36,7 +36,9 @@ class TournamentSchedule {
         (matchMap['teamKey'] as String).replaceAll(RegExp("^frc"), ""),
       );
 
-      currentMatches.add(match);
+      if (!currentMatches.contains(match)) {
+        currentMatches.add(match);
+      }
     }
 
     return TournamentSchedule(matches: currentMatches);
