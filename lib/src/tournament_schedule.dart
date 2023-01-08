@@ -28,6 +28,7 @@ class TournamentSchedule {
         orElse: () => ScheduleMatch(
           identity: GameMatchIdentity.fromLongKey(matchMap['key']),
           teams: [0, 0, 0, 0, 0, 0],
+          ordinalNumber: matchMap['matchNumber'],
         ),
       );
 
@@ -49,8 +50,10 @@ class ScheduleMatch {
   ScheduleMatch({
     required this.identity,
     required this.teams,
+    required this.ordinalNumber,
   });
 
   GameMatchIdentity identity;
   List<int> teams;
+  int ordinalNumber;
 }
