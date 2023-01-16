@@ -10,3 +10,4 @@ export 'src/robot_roles.dart';
 export 'src/scout_schedule.dart';
 export 'src/match.dart';
 export 'src/tournament_schedule.dart';
+export 'src/grid_row.dart';
