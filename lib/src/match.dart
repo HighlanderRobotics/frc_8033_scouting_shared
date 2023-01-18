@@ -11,6 +11,10 @@ class GameMatchIdentity {
   MatchType type;
   int number;
 
+  /// Create a shorter user-readable description of the match
+  String getShortLocalizedDescription() =>
+      "${type.shortName.toUpperCase()}$number";
+
   /// Create a user-readable description of the match
   String getLocalizedDescription({
     includeType = true,
