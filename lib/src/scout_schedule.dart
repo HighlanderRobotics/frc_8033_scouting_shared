@@ -125,9 +125,9 @@ class ScoutSchedule {
   }
 
   factory ScoutSchedule.fromCompressedJSON(String compressed) =>
-      ScoutSchedule.fromJSON(LZString.decompressSync(compressed)!);
+      ScoutSchedule.fromJSON(LZString.decompressFromUTF16Sync(compressed)!);
 
-  String toCompressedJSON() => LZString.compressSync(toJSON())!;
+  String toCompressedJSON() => LZString.compressToUTF16Sync(toJSON())!;
 
   Future<void> upload(String authority) async {
     http.post(
