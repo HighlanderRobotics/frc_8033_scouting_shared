@@ -68,6 +68,7 @@ enum MatchType {
   quarterFinal,
   eliminationFinal,
   finals,
+  grandFinal,
 }
 
 extension MatchTypeExtension on MatchType {
@@ -83,6 +84,8 @@ extension MatchTypeExtension on MatchType {
         return "Elimination Finals";
       case MatchType.finals:
         return "Finals";
+      case MatchType.grandFinal:
+        return "Grand Finals";
     }
   }
 
@@ -98,6 +101,8 @@ extension MatchTypeExtension on MatchType {
         return "Elimination Final";
       case MatchType.finals:
         return "Final";
+      case MatchType.grandFinal:
+        return "Grand Final";
     }
   }
 
@@ -113,6 +118,8 @@ extension MatchTypeExtension on MatchType {
         return "ef";
       case MatchType.finals:
         return "f";
+      case MatchType.grandFinal:
+        return "gf";
     }
   }
 
