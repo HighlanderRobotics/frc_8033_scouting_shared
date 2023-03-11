@@ -130,12 +130,9 @@ class ScoutSchedule {
   String toCompressedJSON() => LZString.compressToUTF16Sync(toJSON())!;
 
   Future<void> upload(String authority) async {
-    http.get(
-      Uri.http(
-        (authority),
-        '/API/manager/updateScoutersSchedule',
-        jsonDecode(toJSON()),
-      ),
+    http.post(
+      Uri.http((authority), '/API/manager/updateScoutersSchedule'),
+      body: toJSON(),
       headers: {
         'Content-Type': 'application/json',
       },
