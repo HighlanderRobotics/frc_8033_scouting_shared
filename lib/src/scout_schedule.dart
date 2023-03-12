@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -129,8 +130,8 @@ class ScoutSchedule {
 
   String toCompressedJSON() => LZString.compressToUTF16Sync(toJSON())!;
 
-  Future<void> upload(String authority) async {
-    http.post(
+  Future<http.Response> upload(String authority) {
+    return http.post(
       Uri.http((authority), '/API/manager/updateScoutersSchedule'),
       body: toJSON(),
       headers: {
@@ -139,9 +140,9 @@ class ScoutSchedule {
     );
   }
 
-  Future<void> save(String authority) async {
+  Future<http.Response> save(String authority) async {
     version++;
-    await upload(authority);
+    return upload(authority);
   }
 
   Color getVersionColor() {
