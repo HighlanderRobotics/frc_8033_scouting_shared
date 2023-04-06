@@ -4,6 +4,7 @@ enum RobotRole {
   offense,
   defense,
   feeder,
+  immobile,
 }
 
 extension RobotRoleExtension on RobotRole {
@@ -15,6 +16,8 @@ extension RobotRoleExtension on RobotRole {
         return "Defense";
       case RobotRole.feeder:
         return "Feeder";
+      case RobotRole.immobile:
+        return "Immobile";
     }
   }
 
@@ -26,6 +29,8 @@ extension RobotRoleExtension on RobotRole {
         return Icons.shield_outlined;
       case RobotRole.feeder:
         return Icons.conveyor_belt;
+      case RobotRole.immobile:
+        return Icons.dangerous;
     }
   }
 }
