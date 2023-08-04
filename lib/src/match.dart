@@ -62,11 +62,7 @@ class GameMatchIdentity {
 
 enum MatchType {
   qualifier,
-  semiFinal,
-  quarterFinal,
-  eliminationFinal,
-  finals,
-  grandFinal,
+  elimination,
 }
 
 extension MatchTypeExtension on MatchType {
@@ -74,16 +70,8 @@ extension MatchTypeExtension on MatchType {
     switch (this) {
       case MatchType.qualifier:
         return "Qualifiers";
-      case MatchType.semiFinal:
-        return "Semi-Finals";
-      case MatchType.quarterFinal:
-        return "Quarter-Finals";
-      case MatchType.eliminationFinal:
-        return "Elimination Finals";
-      case MatchType.finals:
-        return "Finals";
-      case MatchType.grandFinal:
-        return "Grand Finals";
+      case MatchType.elimination:
+        return "Eliminations";
     }
   }
 
@@ -91,16 +79,8 @@ extension MatchTypeExtension on MatchType {
     switch (this) {
       case MatchType.qualifier:
         return "Qualifier";
-      case MatchType.semiFinal:
-        return "Semi-Final";
-      case MatchType.quarterFinal:
-        return "Quarter-Final";
-      case MatchType.eliminationFinal:
-        return "Elimination Final";
-      case MatchType.finals:
-        return "Final";
-      case MatchType.grandFinal:
-        return "Grand Final";
+      case MatchType.elimination:
+        return "Elimination";
     }
   }
 
@@ -108,16 +88,8 @@ extension MatchTypeExtension on MatchType {
     switch (this) {
       case MatchType.qualifier:
         return "qm";
-      case MatchType.semiFinal:
-        return "sf";
-      case MatchType.quarterFinal:
-        return "qf";
-      case MatchType.eliminationFinal:
-        return "ef";
-      case MatchType.finals:
-        return "f";
-      case MatchType.grandFinal:
-        return "gf";
+      case MatchType.elimination:
+        return "em";
     }
   }
 
