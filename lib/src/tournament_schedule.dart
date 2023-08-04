@@ -28,13 +28,13 @@ class TournamentSchedule {
         orElse: () => ScheduleMatch(
           identity: GameMatchIdentity.fromLongKey(matchMap['key']),
           teams: [0, 0, 0, 0, 0, 0],
-          ordinalNumber: matchMap['matchNumber'],
+          ordinalNumber: matchMap['ordinalNumber'],
         ),
       );
 
       match.teams[int.parse((matchMap['key'] as String).split("_").last)] =
           int.parse(
-        (matchMap['teamKey'] as String).replaceAll(RegExp("^frc"), ""),
+        (matchMap['team'] as String).replaceAll(RegExp("^frc"), ""),
       );
 
       if (!currentMatches.contains(match)) {
