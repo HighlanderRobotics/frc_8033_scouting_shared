@@ -1,5 +1,3 @@
-import 'package:flutter/foundation.dart';
-
 class GameMatchIdentity {
   GameMatchIdentity(
     this.type,
