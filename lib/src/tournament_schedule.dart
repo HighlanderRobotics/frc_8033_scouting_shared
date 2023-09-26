@@ -12,11 +12,23 @@ class TournamentSchedule {
     String authority,
     String tournamentKey,
   ) async {
-    List<dynamic> matchesResponse = (jsonDecode(utf8
-        .decode((await http.get(Uri.http(authority, '/API/manager/getMatches', {
+    final response =
+        await http.get(Uri.http(authority, '/API/manager/getMatches', {
       'tournamentKey': tournamentKey,
-    })))
-            .bodyBytes)) as List<dynamic>);
+    }));
+
+    if (response.statusCode != 200) {
+      String error;
+      try {
+        error = jsonDecode(response.body)['result'];
+      } catch (e) {
+        error = '${response.statusCode} ${response.reasonPhrase}';
+      }
+
+      throw error;
+    }
+
+    List<dynamic> matchesResponse = jsonDecode(response.body) as List<dynamic>;
 
     List<ScheduleMatch> currentMatches = [];
 
