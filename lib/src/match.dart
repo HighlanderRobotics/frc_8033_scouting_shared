@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class GameMatchIdentity {
   GameMatchIdentity(
     this.type,
@@ -90,6 +92,15 @@ extension MatchTypeExtension on MatchType {
         return "qm";
       case MatchType.elimination:
         return "em";
+    }
+  }
+
+  IconData get icon {
+    switch (this) {
+      case MatchType.qualifier:
+        return Icons.leaderboard_outlined;
+      case MatchType.elimination:
+        return Icons.emoji_events_outlined;
     }
   }
 
