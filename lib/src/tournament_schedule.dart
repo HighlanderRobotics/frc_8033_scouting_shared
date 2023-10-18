@@ -74,7 +74,11 @@ class TournamentSchedule {
 
 class ValidationError {
   const ValidationError(this.message);
+
   final String message;
+
+  @override
+  String toString() => message;
 }
 
 class ScheduleMatch {
