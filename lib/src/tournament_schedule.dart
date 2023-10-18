@@ -56,6 +56,25 @@ class TournamentSchedule {
 
     return TournamentSchedule(matches: currentMatches);
   }
+
+  void validate() {
+    List<ScheduleMatch> iteratedMatches = [];
+
+    for (var match in matches) {
+      if (iteratedMatches
+          .where(
+              (m) => m.identity.toMediumKey() == match.identity.toMediumKey())
+          .isNotEmpty) {
+        throw ValidationError(
+            "${match.identity.getLocalizedDescription(includeTournament: false)} appears multiple times");
+      }
+    }
+  }
+}
+
+class ValidationError {
+  const ValidationError(this.message);
+  final String message;
 }
 
 class ScheduleMatch {
