@@ -68,6 +68,8 @@ class TournamentSchedule {
         throw ValidationError(
             "${match.identity.getLocalizedDescription(includeTournament: false)} appears multiple times");
       }
+
+      iteratedMatches.add(match);
     }
   }
 }
