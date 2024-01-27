@@ -102,6 +102,19 @@ class ScoutingShift {
   List<Scout> team5;
   List<Scout> team6;
 
+  String get allScoutsList {
+    List<Scout> allScouts = [];
+
+    allScouts.addAll(team1);
+    allScouts.addAll(team2);
+    allScouts.addAll(team3);
+    allScouts.addAll(team4);
+    allScouts.addAll(team5);
+    allScouts.addAll(team6);
+
+    return allScouts.map((s) => s.name).join(", ");
+  }
+
   ScoutingShift copy() {
     return ScoutingShift(
       start: start,
