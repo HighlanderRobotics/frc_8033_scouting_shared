@@ -4,12 +4,16 @@ class GameMatchIdentity {
   GameMatchIdentity(
     this.type,
     this.number,
-    this.tournamentKey,
-  );
+    this.tournamentKey, {
+    this.tournamentName,
+  });
 
   String tournamentKey;
+  String? tournamentName;
   MatchType type;
   int number;
+
+  String get localizedTournament => tournamentName ?? tournamentKey;
 
   /// Create a shorter user-readable description of the match
   String getShortLocalizedDescription() =>
@@ -22,27 +26,27 @@ class GameMatchIdentity {
     includeTournament = true,
   }) {
     if (includeType && !includeNumber && !includeTournament) {
-      return "${type.localizedDescriptionPlural.toLowerCase()} match";
+      return "${type.localizedDescriptionPlural} match";
     }
     if (includeType && !includeNumber && includeTournament) {
-      return "${type.localizedDescriptionPlural.toLowerCase()} match at $tournamentKey";
-    } // TODO: Make tournament key localizer
+      return "${type.localizedDescriptionPlural} match at $localizedTournament";
+    }
     if (includeType && includeNumber && !includeTournament) {
       return "${type.localizedDescriptionSingular} $number";
-    } // TODO: Make tournament key localizer
+    }
     if (!includeType && includeNumber && includeTournament) {
-      return "Match #$number at $tournamentKey";
-    } // TODO: Make tournament key localizer
+      return "Match #$number at $localizedTournament";
+    }
     if (!includeType && includeNumber && !includeTournament) {
       return "Match #$number";
     }
     if (!includeType && !includeNumber && includeTournament) {
-      return "Match at $tournamentKey";
-    } // TODO: Make tournament key localizer
+      return "Match at $localizedTournament";
+    }
     if (!includeType && !includeNumber && !includeTournament) return "Match";
     if (includeType && includeNumber && includeTournament) {
-      return "${type.localizedDescriptionSingular.toLowerCase()} $number at $tournamentKey";
-    } // TODO: Make tournament key localizer
+      return "${type.localizedDescriptionSingular} $number at $localizedTournament";
+    }
 
     return "this should never happen";
   }
