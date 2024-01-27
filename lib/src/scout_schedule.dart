@@ -1,32 +1,20 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:lzstring/lzstring.dart';
+import 'dart:math' as math;
 
 class ScoutSchedule {
   ScoutSchedule({
-    required this.version,
+    required this.hash,
     required this.shifts,
   });
 
-  int version;
+  String hash;
   List<ScoutingShift> shifts;
 
   ScoutSchedule copy() {
     return ScoutSchedule(
-      version: version,
+      hash: hash,
       shifts: shifts.map((s) => s.copy()).toList(),
     );
-  }
-
-  List<String> getScoutsForMatch(int match) {
-    List<String> scouts = [];
-    for (ScoutingShift shift in shifts) {
-      if (shift.start <= match && match <= shift.end) {
-        scouts.addAll(shift.scouts);
-      }
-    }
-    return scouts;
   }
 
   bool shiftsDoNotOverlap() {
@@ -36,15 +24,6 @@ class ScoutSchedule {
             shifts[i].start <= shifts[j].end) {
           return false;
         }
-      }
-    }
-    return true;
-  }
-
-  bool noGapsBetweenShifts() {
-    for (int i = 0; i < shifts.length - 1; i++) {
-      if (shifts[i].end != shifts[i + 1].start - 1) {
-        return false;
       }
     }
     return true;
@@ -68,84 +47,36 @@ class ScoutSchedule {
     return true;
   }
 
-  bool noEmptyScoutNames() {
-    for (ScoutingShift shift in shifts) {
-      if (shift.scouts.any((s) => s.trim().isEmpty)) {
-        return false;
-      }
-    }
-    return true;
-  }
-
   String? validate() {
     if (!shiftsDoNotOverlap()) return 'Some shifts overlap.';
-    if (!noGapsBetweenShifts()) return 'Some shifts have gaps between them.';
     if (!allMatchNumbersPositive()) return 'Some match numbers are negative.';
     if (!shiftsHaveValidRanges()) {
       return 'Some shifts don\'t have valid ranges.';
-    }
-    if (!noEmptyScoutNames()) {
-      return 'Some scout names are empty or contain only whitespace.';
     }
 
     // If it's valid, return null.
     return null;
   }
 
-  factory ScoutSchedule.fromJSON(String json) {
-    Map<String, dynamic> map = jsonDecode(json);
-
+  factory ScoutSchedule.fromJson(Map<String, dynamic> json) {
     return ScoutSchedule(
-      version: map["version"],
-      shifts: (map['shifts'] as List)
-          .map((shift) => ScoutingShift(
-                start: shift['start'],
-                end: shift['end'],
-                scouts:
-                    (shift['scouts'] as List).map((e) => e.toString()).toList(),
-              ))
+      hash: json["hash"],
+      shifts: (json["data"] as List)
+          .map((shift) => ServerScoutingShift.fromJson(shift))
           .toList(),
     );
   }
 
-  String toJSON() {
-    final shiftsMap = shifts
-        .map((shift) => {
-              'start': shift.start,
-              'end': shift.end,
-              'scouts': shift.scouts,
-            })
-        .toList();
+  Color getVerionColor(String hash, double saturation, double lightness) {
+    int sum = 0;
 
-    return jsonEncode({
-      'version': version,
-      'shifts': shiftsMap,
-    });
-  }
+    for (int i = 0; i < hash.length; i++) {
+      sum += hash.codeUnitAt(i);
+    }
 
-  factory ScoutSchedule.fromCompressedJSON(String compressed) =>
-      ScoutSchedule.fromJSON(LZString.decompressFromUTF16Sync(compressed)!);
+    final hue = (sum * math.e) % 360;
 
-  String toCompressedJSON() => LZString.compressToUTF16Sync(toJSON())!;
-
-  Future<http.Response> upload(String authority) {
-    return http.post(
-      Uri.http((authority), '/API/manager/updateScoutersSchedule'),
-      body: toJSON(),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    );
-  }
-
-  Future<http.Response> save(String authority) async {
-    version++;
-    return upload(authority);
-  }
-
-  Color getVersionColor() {
-    return HSLColor.fromAHSL(1, (version.toDouble() * 82) % 360, 0.5, 0.5)
-        .toColor();
+    return HSLColor.fromAHSL(1.0, hue, saturation, lightness).toColor();
   }
 }
 
@@ -153,18 +84,81 @@ class ScoutingShift {
   ScoutingShift({
     required this.start,
     required this.end,
-    required this.scouts,
+    required this.team1,
+    required this.team2,
+    required this.team3,
+    required this.team4,
+    required this.team5,
+    required this.team6,
   });
 
   int start;
   int end;
-  List<String> scouts;
+
+  List<Scout> team1;
+  List<Scout> team2;
+  List<Scout> team3;
+  List<Scout> team4;
+  List<Scout> team5;
+  List<Scout> team6;
 
   ScoutingShift copy() {
     return ScoutingShift(
       start: start,
       end: end,
-      scouts: List.from(scouts),
+      team1: team1.map((s) => s).toList(),
+      team2: team2.map((s) => s).toList(),
+      team3: team3.map((s) => s).toList(),
+      team4: team4.map((s) => s).toList(),
+      team5: team5.map((s) => s).toList(),
+      team6: team6.map((s) => s).toList(),
+    );
+  }
+}
+
+class ServerScoutingShift extends ScoutingShift {
+  ServerScoutingShift({
+    required super.start,
+    required super.end,
+    required super.team1,
+    required super.team2,
+    required super.team3,
+    required super.team4,
+    required super.team5,
+    required super.team6,
+    required this.id,
+  });
+
+  String id;
+
+  factory ServerScoutingShift.fromJson(Map<String, dynamic> json) {
+    return ServerScoutingShift(
+      start: json['startMatchOrdinalNumber'],
+      end: json['endMatchOrdinalNumber'],
+      team1: (json['team1'] as List).map((s) => Scout.fromJson(s)).toList(),
+      team2: (json['team2'] as List).map((s) => Scout.fromJson(s)).toList(),
+      team3: (json['team3'] as List).map((s) => Scout.fromJson(s)).toList(),
+      team4: (json['team4'] as List).map((s) => Scout.fromJson(s)).toList(),
+      team5: (json['team5'] as List).map((s) => Scout.fromJson(s)).toList(),
+      team6: (json['team6'] as List).map((s) => Scout.fromJson(s)).toList(),
+      id: json['uuid'],
+    );
+  }
+}
+
+class Scout {
+  Scout({
+    required this.name,
+    required this.id,
+  });
+
+  String name;
+  String id;
+
+  factory Scout.fromJson(Map<String, dynamic> json) {
+    return Scout(
+      name: json['name'],
+      id: json['uuid'],
     );
   }
 }
