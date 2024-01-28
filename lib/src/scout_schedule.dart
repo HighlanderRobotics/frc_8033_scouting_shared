@@ -176,13 +176,13 @@ class ServerScoutingShift extends ScoutingShift {
 }
 
 class Scout {
-  Scout({
+  const Scout({
     required this.name,
     required this.id,
   });
 
-  String name;
-  String id;
+  final String name;
+  final String id;
 
   factory Scout.fromJson(Map<String, dynamic> json) {
     return Scout(
