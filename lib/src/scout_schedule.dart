@@ -80,6 +80,22 @@ class ScoutSchedule {
   }
 }
 
+class ServerScoutSchedule extends ScoutSchedule {
+  ServerScoutSchedule({
+    required super.hash,
+    required List<ServerScoutingShift> super.shifts,
+  });
+
+  factory ServerScoutSchedule.fromJson(Map<String, dynamic> json) {
+    return ServerScoutSchedule(
+      hash: json["hash"],
+      shifts: (json["data"] as List)
+          .map((shift) => ServerScoutingShift.fromJson(shift))
+          .toList(),
+    );
+  }
+}
+
 class ScoutingShift {
   ScoutingShift({
     required this.start,
