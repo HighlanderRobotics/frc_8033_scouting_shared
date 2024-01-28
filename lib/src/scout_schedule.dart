@@ -177,6 +177,21 @@ class ServerScoutingShift extends ScoutingShift {
       id: json['uuid'],
     );
   }
+
+  @override
+  ServerScoutingShift copy() {
+    return ServerScoutingShift(
+      start: start,
+      end: end,
+      team1: team1.map((s) => s).toList(),
+      team2: team2.map((s) => s).toList(),
+      team3: team3.map((s) => s).toList(),
+      team4: team4.map((s) => s).toList(),
+      team5: team5.map((s) => s).toList(),
+      team6: team6.map((s) => s).toList(),
+      id: id,
+    );
+  }
 }
 
 class Scout {

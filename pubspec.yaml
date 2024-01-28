@@ -1,6 +1,6 @@
 name: frc_8033_scouting_shared
 description: A starting point for Dart libraries or applications.
-version: 5.4.0
+version: 5.5.0
 # homepage: https://www.example.com
 
 environment:
