@@ -94,6 +94,10 @@ class ServerScoutSchedule extends ScoutSchedule {
           .toList(),
     );
   }
+
+  @override
+  List<ServerScoutingShift> get shifts =>
+      super.shifts as List<ServerScoutingShift>;
 }
 
 class ScoutingShift {
