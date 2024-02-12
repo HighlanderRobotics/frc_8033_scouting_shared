@@ -52,7 +52,8 @@ class GameMatchIdentity {
   }
 
   /// Create a match from a long match key such as `2022cc_qm14_1`
-  factory GameMatchIdentity.fromLongKey(String longKey) {
+  factory GameMatchIdentity.fromLongKey(String longKey,
+      {String? tournamentName}) {
     List<String> elements = longKey.split("_");
 
     return GameMatchIdentity(
@@ -60,6 +61,7 @@ class GameMatchIdentity {
           elements[1].replaceAll(RegExp('\\d'), "")),
       int.parse(elements[1].replaceAll(RegExp('[a-zA-Z]'), "")),
       elements[0],
+      tournamentName: tournamentName,
     );
   }
 
